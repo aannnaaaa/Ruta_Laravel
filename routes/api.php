@@ -5,7 +5,9 @@ use App\Http\Controllers\TripControllerApi;
 use App\Http\Controllers\PostControllerApi;
 use App\Http\Controllers\ProfileControllerApi;
 use App\Http\Controllers\TagControllerApi;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 
 
@@ -17,11 +19,25 @@ Route::get('/trips/{id}', [TripControllerApi::class, 'show']);
 Route::get('/posts', [PostControllerApi::class, 'index']);
 Route::get('/posts/{id}', [PostControllerApi::class, 'show']);
 
-//http://localhost:8000/api/profiles
-Route::get('/profiles', [ProfileControllerApi::class, 'index']);
-Route::get('/profiles/{id}', [ProfileControllerApi::class, 'show']);
+////http://localhost:8000/api/profiles
+//Route::get('/profiles', [ProfileControllerApi::class, 'index']);
+//Route::get('/profiles/{id}', [ProfileControllerApi::class, 'show']);
 
 //http://localhost:8000/api/tags
 Route::get('/tags', [TagControllerApi::class, 'index']);
 Route::get('/tags/{id}', [TagControllerApi::class, 'show']);
 
+//http://localhost:8000/api/login
+Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::middleware ( 'auth:sanctum')->get( '/logout', [AuthController::class, 'logout']);
+
+Route:: group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profiles', [ProfileControllerApi::class, 'index']);
+    Route::get('/profiles/{id}', [ProfileControllerApi::class, 'show']);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
