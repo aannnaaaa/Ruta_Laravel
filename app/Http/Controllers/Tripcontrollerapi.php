@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 
 class TripControllerApi extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        return response(Trip::all());
+        return response(Trip::limit($request->perpage ?? 5)
+            ->offset(($request->perpage ?? 5) * ($request->page ?? 0))
+            ->get());
     }
 
-    public function show(string $id)
+    public function total()
     {
-        return response(Trip::find($id));
+        return response(Trip::all()->count());
     }
 }
+
+

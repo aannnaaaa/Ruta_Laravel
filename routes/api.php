@@ -30,6 +30,8 @@ Route::get('/tags/{id}', [TagControllerApi::class, 'show']);
 //http://localhost:8000/api/login
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/trips_total', [TripControllerApi::class, 'total']);
+Route::get('/posts_total', [PostControllerApi::class, 'total']);
 
 Route::middleware ( 'auth:sanctum')->get( '/logout', [AuthController::class, 'logout']);
 

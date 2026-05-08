@@ -7,15 +7,16 @@ use Illuminate\Http\Request;
 
 class PostControllerApi extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        return response(Post::all());
+        return response(Post::limit($request->perpage ?? 5)
+            ->offset(($request->perpage ?? 5) * ($request->page ?? 0))
+            ->get());
     }
 
-    public function show(string $id)
+    public function total()
     {
-        return response(Post::find($id));
+        return response(Post::all()->count());
     }
 }
 
