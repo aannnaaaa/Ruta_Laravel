@@ -16,6 +16,9 @@ Route::get('/trips', [TripControllerApi::class, 'index']);
 Route::get('/trips/{id}', [TripControllerApi::class, 'show']);
 
 //http://localhost:8000/api/posts
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/post', [PostControllerApi::class, 'store']);
+});
 Route::get('/posts', [PostControllerApi::class, 'index']);
 Route::get('/posts/{id}', [PostControllerApi::class, 'show']);
 
