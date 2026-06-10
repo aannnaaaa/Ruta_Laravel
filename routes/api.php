@@ -16,11 +16,14 @@ Route::get('/trips', [TripControllerApi::class, 'index']);
 Route::get('/trips/{id}', [TripControllerApi::class, 'show']);
 
 //http://localhost:8000/api/posts
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/post', [PostControllerApi::class, 'store']);
-});
 Route::get('/posts', [PostControllerApi::class, 'index']);
 Route::get('/posts/{id}', [PostControllerApi::class, 'show']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/post', [PostControllerApi::class, 'store']);
+    Route::delete('/posts/{id}', [PostControllerApi::class, 'destroy']);
+    Route::post('/posts/{id}', [PostControllerApi::class, 'update']);
+});
 
 ////http://localhost:8000/api/profiles
 //Route::get('/profiles', [ProfileControllerApi::class, 'index']);
